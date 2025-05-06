@@ -121,30 +121,3 @@ def pairs(elements):
       result.append(pair)
 #7) Return the final list of pairs
   return result
-
-
-#anagrams
-#Write a function, anagrams, that takes in two strings as arguments. The function should return a boolean indicating whether or not the strings are anagrams. 
-#Anagrams are strings that contain the same characters, but in any order.
-
-#1)create a function that counts characters that take a str arg
-def anagrams(s1, s2):
-  def count_char(s):
-  #2)count it in a dictionary {}
-    count = {}
-  #3)loop characters in str 
-    for char in s:
-  #4) if charecters is not in dictionary start at zero
-      if char not in count:
-        count[char] = 0
-  #5)when we put it in dictionary we want to add +1 to each count 
-      count[char] += 1
-    return count
-  #6) compare each string
-  return count_char(s1) == count_char(s2)
-    
-print(anagrams("restful", "fluster"))
-
-  #using hashmap. keyvalue pairs {a dictionary}
-    #{r:1 e:1 s:1 t:1 f:1 u:1 l:1 } ==
-    #{f:1 l:1 u:1 s:1 t:1 e:1 r:1}  return True/False
