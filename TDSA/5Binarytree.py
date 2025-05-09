@@ -225,4 +225,81 @@ b.right = e
 print(tree_sum(a))  # Output should be 5 + 3 + 7 + 2 + 4 = 21
 
 
-#
+#Tree includes
+#write a function, tree_includes, that takes in the root of a binary and a target value. The function should return a boolean indicating whether or not the value is contained in the tree.
+
+
+# Import deque from the collections module for efficient queue operations
+from collections import deque
+# Define a function to check if a target value exists in the binary tree
+def tree_includes(root, target):
+# If the tree is empty, return False
+  if not root:
+    return False
+# Create a queue and add the root node to start BFS traversal
+  queue = deque([ root ])
+# Loop while there are nodes to process in the queue
+  while queue:
+# Remove the front node from the queue
+    node = queue.popleft()
+# If the current node's value matches the target, return True
+    if node.val == target:
+      return True
+# If the current node has a left child, add it to the queue
+    if node.left:
+      queue.append(node.left) 
+# If the current node has a right child, add it to the queue
+    if node.right:
+      queue.append(node.right) 
+# If the loop finishes without finding the target, return False
+  return False
+
+
+
+# Define a function that checks if a target value is in the binary tree
+def tree_includes(root, target):
+  # If the current node is None (empty), return False
+  if not root:
+    return False
+# If the current node's value matches the target, return True
+  if root.val == target:
+    return True
+# Recursively check the left and right subtrees.
+# If the target is found in either, return True
+  return tree_includes(root.left, target) or tree_includes(root.right, target)
+
+
+# Define the Node class
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+# Create a binary tree:
+#        a
+#       / \
+#      b   c
+#     /     \
+#    d       e
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+e = Node('e')
+
+a.left = b
+a.right = c
+b.left = d
+c.right = e
+
+# Run test cases
+print(tree_includes(a, 'e'))  # Output: True
+print(tree_includes(a, 'f'))  # Output: False
+
+
+
+#tree min value
+#write a function, tree_min_value, that takes in the root of a binary tree that contains number values. the function should return the minimum value within the tree.
+
