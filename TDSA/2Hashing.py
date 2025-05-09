@@ -1,33 +1,33 @@
 
-#Hashing 
-#Think of a hashmap (like a Python dictionary) as a magic notebook where you can write down and look up information instantly. It’s perfect for problems where you need to count things, check if something exists, or find pairs.
+# Hashing -> In Python, hashing means using dictionaries or sets to store and find things really fast.
+
+# Think of a hashmap (like a Python dictionary) as a magic notebook where you can write down and look up information instantly. It’s perfect for problems where you need to count things, check if something exists, or find pairs.
 
 #Clues That a Problem Needs Hashing
-
-# "Count how many times X appears"
-# (Example: Anagrams, Most Frequent Character)
-# "Find two things that add/multiply to Y"
-# (Example: Pair Sum, Pair Product)
-# "Check if something exists in a list quickly"
-# (Example: Intersection, Exclusive Items)
-# "Are all elements unique?"
-# (Example: All Unique)
+"Count how many times X appears"
+(Example: Anagrams, Most Frequent Character)
+"Find two things that add/multiply to Y"
+(Example: Pair Sum, Pair Product)
+"Check if something exists in a list quickly"
+(Example: Intersection, Exclusive Items)
+"Are all elements unique?"
+(Example: All Unique)
 
 
 #Strategy to Recognize Hashing Problems
 
-# Look for Keywords:
-# "Count", "frequency", "appear", "occurrence" → Use a dictionary.
-# "Find pairs", "sum", "product" → Track complements in a dictionary.
-# "Check existence", "common elements", "unique" → Use a set.
+Look for Keywords:
+"Count", "frequency", "appear", "occurrence" → Use a dictionary.
+"Find pairs", "sum", "product" → Track complements in a dictionary.
+"Check existence", "common elements", "unique" → Use a set.
 
 #How to Remember the Steps
 
 # Step 1: Identify what you need to track (counts, pairs, existence).
 # Step 2: Choose the right tool:
-# Dictionary for counts or key-value pairs.
-# Set for yes/no existence checks.
-# Step 3: Iterate through the data once, updating your hash structure.
+counts = {}     # for counting things
+seen = set()    # for checking if something exists
+# Step 3: Iterate/loop through the data once, updating your hash structure.
 # Step 4: Use the hash structure to find your answer (compare counts, look up complements, etc.).
 
 
@@ -256,3 +256,11 @@ def intersection_with_dupes(a, b):
 
 #test
 print(intersection_with_dupes(["a", "b", "c", "b"], ["x", "y", "b", "b"]))
+
+
+🎯 Summary:
+
+You are in a hashing problem if:
+You need to count something → use dict
+You need to check if something exists fast → use set
+You want fast access instead of looping again and again → use dict or set
