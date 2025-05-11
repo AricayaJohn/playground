@@ -695,3 +695,423 @@ b.left = d
 
 # Run the test
 print(how_high(a))  # Expected output: 2 (edges in longest path: a -> b -> d)
+
+
+
+#Bottom right value
+#Write a function, bottom_right_value, that takes in the root of a binary tree. The function should return the right most value in the bottom-most level of the tree.
+
+#you may assume that the input tree is non-empty
+
+from collections import deque  # Import deque for efficient queue operations
+
+def bottom_right_value(root):
+# Initialize the queue with the root node to start BFS
+  queue = deque([ root ])
+  
+  current = None  # This will keep track of the last node visited
+
+# Loop until the queue is empty
+  while queue:
+# Pop the first node from the queue (FIFO)
+    current = queue.popleft()
+# If the current node has a left child, add it to the queue
+    if current.left is not None:
+      queue.append(current.left)
+# If the current node has a right child, add it to the queue
+    if current.right is not None:
+      queue.append(current.right)
+# When the loop ends, 'current' holds the last node visited in BFS,
+  # which is the bottom-right-most node
+  return current.val
+
+
+# Binary tree node definition
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+# Create the tree:
+#       a
+#      / \
+#     b   c
+#        /
+#       d
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+
+a.left = b
+a.right = c
+c.left = d
+
+# Test the function
+print(bottom_right_value(a))  # Expected output: 'd'
+
+
+
+#all tree paths
+#Write a function, all_tree_paths, that takes in the root of a binary tree. The function should return a 2-dimensional list where each subarray represents a root-to-leaf path in the tree.
+
+#the order within an individual path must start at the root and end at the leaf, but the relative order among paths in the outer list does not matter
+
+def all_tree_paths(root):
+ # Get all paths from root to leaves (paths are built in reverse order)
+  paths = _all_tree_paths(root)
+# Reverse each path so it starts at the root and ends at a leaf
+  for path in paths:
+    path.reverse()
+# Return the list of paths
+  return paths
+  
+def _all_tree_paths(root):
+# Base case: if the node is None, return an empty list (no paths)
+  if root is None:
+    return []
+# Base case: if the node is a leaf, return a path with just its value
+  if root.left is None and root.right is None:
+    return [[root.val]]
+# This will hold all the paths from this node to leaves
+  all_paths = [] 
+# Recursively get all paths from the left subtree
+  left_sub_paths = _all_tree_paths(root.left)
+  for path in left_sub_paths:
+# Add the current node to the end of each left path
+    path.append(root.val)     
+# Add the updated path to the final list
+    all_paths.append(path)    
+# Recursively get all paths from the right subtree
+  right_sub_paths = _all_tree_paths(root.right)
+  for path in right_sub_paths:
+# Add the current node to the end of each right path
+    path.append(root.val) 
+# Add the updated path to the final list
+    all_paths.append(path)    
+# Return all paths found from this node to leaves
+  return all_paths  
+
+
+
+# Binary tree node definition
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+# Build this tree:
+#      a
+#     / \
+#    b   c
+#   /   / \
+#  d   e   f
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+e = Node('e')
+f = Node('f')
+
+a.left = b
+a.right = c
+b.left = d
+c.left = e
+c.right = f
+
+# Call the function
+print(all_tree_paths(a))
+# Expected output:
+# [['a', 'b', 'd'], ['a', 'c', 'e'], ['a', 'c', 'f']]
+
+#treelevels
+#write a function, tree_levels, that takes in the root of a binary tree. The function should return a 2-dimensional list where each sublist represents a level of the tree.
+
+from collections import deque
+
+def tree_levels(root):
+  # If the tree is empty, return an empty list
+  if root is None:
+    return []
+  
+  levels = []  # This will store the final result (list of levels)
+  queue = deque([ (root, 0) ])  # Initialize the queue with root node and level 0
+
+  while queue:
+    current, level_num = queue.popleft()  # Get the next node and its level
+    
+    # If this is the first time we're visiting this level, add a new list
+    if len(levels) == level_num:
+      levels.append([ current.val ])
+    else:
+      # Otherwise, append to the existing level
+      levels[level_num].append(current.val)
+    
+    # Add the left child to the queue with level +1
+    if current.left is not None:
+      queue.append((current.left, level_num + 1))
+    
+    # Add the right child to the queue with level +1
+    if current.right is not None:
+      queue.append((current.right, level_num + 1))
+  
+  # Return all the levels
+  return levels
+
+
+
+def tree_levels(root):
+  levels = []  # Final result to store all levels
+  _tree_levels(root, levels, 0)  # Call helper function
+  return levels
+
+def _tree_levels(root, levels, level_num):
+  # If the current node is None, return
+  if root is None:
+    return
+
+  # If visiting this level for the first time, add a new list
+  if level_num == len(levels):
+    levels.append([ root.val ])
+  else:
+    # Otherwise, add the value to the existing level
+    levels[level_num].append(root.val)
+  
+  # Recurse to the left and right children with incremented level
+  _tree_levels(root.left, levels, level_num + 1)
+  _tree_levels(root.right, levels, level_num + 1)
+
+
+
+def tree_levels(root):
+  # If the tree is empty, return an empty list
+  if root is None:
+    return []
+
+  levels = []  # Final result
+  stack = [ (root, 0) ]  # Start with root and level 0
+
+  while stack:
+    node, level_num = stack.pop()  # Get next node and its level
+
+    # If visiting this level for the first time, add a new list
+    if len(levels) == level_num:
+      levels.append([ node.val ])
+    else:
+      levels[level_num].append(node.val)
+    
+    # Add right child first so left gets processed first (LIFO order)
+    if node.right is not None:
+      stack.append((node.right, level_num + 1))
+    if node.left is not None:
+      stack.append((node.left, level_num + 1))
+
+  return levels
+
+
+
+# Tree Node class
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+# Build tree:
+#       a
+#      / \
+#     b   c
+#    / \   \
+#   d   e   f
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+e = Node('e')
+f = Node('f')
+
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+c.right = f
+
+# Expected output: [['a'], ['b', 'c'], ['d', 'e', 'f']]
+print(tree_levels(a))
+
+
+#level averages
+#write a function, level_averages, that takes in the root of a binary tree that contains number values. The function should return a list containing the average value of each level.
+
+#Import the mean function to calculate averages
+from statistics import mean
+
+def level_averages(root):
+#this will hold all nodes grouped by their level
+  levels =[]
+#Fill the levels list using a helper function
+  fill_levels(root, levels, 0)
+#List to store the average for each level
+  avgs = []
+#Go through each level and compute the average
+  for level in levels:
+#Use mean() to calculate average of node values in the level
+    avgs.append(mean(level))
+#Return the list of averages
+  return avgs
+
+def fill_levels(root, levels, level_num):
+#base case: if current node is None, do nothing
+  if root is None:
+    return
+#if we are visiting this level for the first time, add new list
+  if level_num == len(levels):
+    levels.append([ root.val ])
+  else:
+#otherwise, add the value to the existing level list
+    levels[level_num].append(root.val)
+#Recurse to the left and right children, increase the level number
+
+  fill_levels(root.left, levels, level_num + 1)
+  fill_levels(root.right, levels, level_num + 1)
+
+
+
+#Tree Node class
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+#build tree:
+#      5
+#    /  \
+#   3    8
+#  / \    \
+# 1  4    9
+
+a = Node(5)
+b = Node(3)
+c = Node(8)
+d = Node(1)
+e = Node(4)
+f = Node(9)
+
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+c.right = f
+
+#expected output: [5.0, 5.5, 4.666...]
+print(level_averages(a))
+
+
+
+#leaf list
+#write a function, leaf_list, that takes in the root of a binary tree and returns a list containing the values of all leaf nodes in the left-to-right order
+
+
+#iteratve(using stack)
+def leaf_list(root):
+  if root is None:
+#return empty list if tree is empty
+    return [ ]
+#list to store the leaf node values
+  leaves = []
+#stack for depth first search traversal
+  stack = [ root ]
+
+  while stack:
+#get the last node added to the stack
+    current = stack.pop()
+#if the current node is a leaf(no chlidren), add its value to the result
+  if current.left is None and current.right is None:
+    leaves.append(current.val)
+#add right child first so left is processed first(stack is LIFO)
+  if current.right is not None:
+    stack.append(current.right)
+#add left chlidren
+  if current.left is not None:
+    stack.append(current.left)
+#return list of leaf values
+  return leaves
+
+
+#version 2: recursive(with helper)
+def leaf_list(root):
+#this will collect all leaf node values
+  leaves = []
+#Helper function does the recursive work
+  _leaf_list(root, leaves)
+  return leaves
+
+def _leaf_list(root, leaves):
+#base case: empty node, do nothing
+  if root is None:
+    return
+#if it's a leaf node, add its value
+  if root.left is None and root.right is None:
+    leaves.append(root.val)
+
+#Recurse left and right
+  _leaf_list(root.left, leaves)
+  _leaf_list(root.right, leaves)
+
+
+#define the node class
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+a = Node("a")
+b = Node("b")
+c = Node("c")
+d = Node("d")
+e = Node("e")
+f = Node("f")
+
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+c.right = f
+
+#      a
+#    /   \
+#   b     c
+#  / \     \
+# d   e     f
+
+print(leaf_list(a)) # -> [ 'd', 'e', 'f' ] 
+
+
+
+
+#Questions
+#in binary tree, what term is used to descibe the single node that has no parent?
+#root
+
+#what does the word "binary" mean in "binary tree"?
+#each node in a binary tree has at most two children
+
+#what data structures are used to implement depth-first and breadth-first traversal
+#Depth-first uses a stack
+#while breadth first uses a queue
+
+#What is the least number of nodes a binary tree may have
+#zero nodes. the empty tree is considered as a binary tree; this is useful thinking for recursive algorithms
+
+#in a ibinary tree, what term is used to describe the nodes that have no children?
+#leaves
+
+#what are two different ways to implement a depth-first traversal?
+# Iteratively using an explicit stack or recursively utilizing the underlying call stack
