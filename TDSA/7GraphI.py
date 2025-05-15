@@ -1,6 +1,9 @@
 #graphs
 #collection of nodes + edges
 
+n = nodes
+e = edges #ede is the connection of nodes
+
 # directed graphs 
 # - with arrow heads
 
@@ -11,7 +14,6 @@
 #is a node accessible to a node by edge
 
 #adjecency list -used to explain a graph
-
 
 #has path
 #Write a function, has_path, that takes in a dictionary representing the adjacency list of a directed acyclic graph and two nodes(src, dst). The function should return a boolean indicating whether or not there exists a directed path between the source and destination nodes.
@@ -127,3 +129,62 @@ edges = [
 
 print(undirected_path(edges, 'j', 'm')) #True(j-i-k-m)
 print(undirected_path(edges, 'j', 'o')) #False(disconnected graph)
+
+
+
+#connected components count
+#Write a function, connected_components_count, that takes in the adjacency list of an undirected graph. The function should return the number of connected compinents within the graph
+
+#function depth first search
+def connected_components_count(graph):
+#keep track of all visited nodes so we dont revisit them
+  visited = set()
+#initialize the count of connected components
+  count = 0
+#loop through every node in the graph
+  for node in graph:
+#if exploring this node leads to discovering a new component
+    if explore(graph, node, visited) == True:
+#increase the component count
+      count += 1
+#return the total number of connected components
+  return count
+
+#helper function
+def explore(graph, current, visited):
+#if the node is already visited, it's part of a known component
+  if current in visited:
+    return False
+#mark the node as visited
+  visited.add(current)
+#recursively visit all connected neighbors
+  for neighbor in graph[current]:
+    explore(graph, neighbor, visited)
+#returning True means we explored a new component
+  return True
+
+
+
+#testCase:
+graph = {
+  0: [8, 1, 5],
+  1: [0],
+  5: [0, 8],
+  8: [0, 5],
+  2: [3, 4],
+  3: [2, 4],
+  4: [3, 2],
+}
+
+print(connected_components_count(graph)) #output: 2
+
+
+
+
+
+
+
+
+
+
+
