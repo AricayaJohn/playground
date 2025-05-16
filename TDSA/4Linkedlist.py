@@ -167,4 +167,63 @@ print(linked_list_find(a, "q")) #False
 
 
 
-#get 
+#get node value
+#write a function, get_node_value, that takes in the head of a linked list and an index. The function should return the value of the linked list at the specified index.
+
+#Return the value at a specific index in a linked list using a loop
+def get_node_value(head, index):
+#start counting from 0
+    count = 0
+#begin at the head of the list
+    current = head
+#traverse until index matches target
+    while current is not None:
+#if current index matches target
+        if count == index:
+#return the value at this node
+            return current.val
+#move to the next node
+        current = current.next
+#Increase the index counter
+        count += 1
+#if index is out of bounds, return none
+    return None
+
+
+#using recursion
+def get_node_value(head, index):
+#baseCase: if list is empty, return None
+    if head is None:
+        return None
+#if index is 0, return current node's value
+    if index == 0:
+        return head.val
+#recur on the next node with a reduced index
+    return get_node_value(head.next, index -1)
+
+
+#testCase:
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+    
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+
+
+a.next = B
+b.next = C
+c.next = D
+
+# a -> b -> c -> d
+
+get_node_value(a, 3) #'d
+
+
+
+
+#reverselist
+#write a 
