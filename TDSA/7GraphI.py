@@ -183,8 +183,182 @@ print(connected_components_count(graph)) #output: 2
 #largest component
 #write a function, largest_coponent, that takes in the adjacency list of an undirected graph. The function should return the size of the largest connected component in the graph
 
+#Returns the size of the largest connected component in the graph
+def largest_component(graph):
+#keeps track of the visited nodes   
+    visited = set()
+#store the size of the largest component found so far
+    largest = 0
+#Iterate over each node in the graph
+    for node in graph:
+#explore the component size only if the node hasnt been visited
+      size = explore_size(graph, node, visited)
+#update the largest if this component is bigger
+      if size > largest:
+          largest = size
+    return largest
+
+#Helper function to explore the size of a component starting from a node
+def explore_size(graph, node, visited):
+  if node in visited:
+    return 0
+#mark node as visited
+  visited.add(node)
+#count the current node
+  size = 1
+#Recursively explore all neighbors
+  for neighbor in graph[node]:
+    size += explore_size(graph, neighbor, visited)
+
+  return size
 
 
+#test case 
+graph = {
+  0: [8, 1, 5],
+  1: [0],
+  5: [0, 8],
+  8: [0, 5],
+  2: [3, 4],
+  3: [2, 4],
+  4: [3, 2]
+}
+
+#component 1: {0,1,5,8} (size 4)
+#component 2: {2, 3, 4} (size 3)
+print(largest_component(graph)) #output: 4
+
+
+
+#shortest path 
+#write a function, shortest_path, that takes in a list of edges for an undirected graph and two nodes(node_A, node_B), The function should return the length of the shortest path between A and B. .Consider the length as the number of edges in the path, not the number of nodes. If there is no path between A and B, then return -1. You can assume that A and B exist as nodes in the graph.
+
+
+from collections import deque
+
+
+
+#island count
+#write a funtion, island_count, that takes in a grid containing Ws and Ls. W representing water and L representing land. The function should return the number of islands on the grid. An Island is a vertically or horizontally connected region of land.
+
+
+#counts the number of distinct islands in a grid
+def island_count(grid):
+  visited = set()
+  count = 0
+#Traverse each cell in the grid
+  for r in range(len(grid)):
+    for c in range(len(grid[0])):
+#if we find a new land cell that hasnt been visited, explore visited
+      if explore(grid, r, c, visited):
+#increment the island count
+        count += 1
+  return count
+#explore connected land titles using DFS
+def explore(grid, r, c, visited):
+#check if the row and column are within bounds
+  row_inbounds = 0 <= r < len(grid)
+  col_inbounds = 0 <= c < len(grid[0])
+  if not row_inbounds or not col_inbounds:
+    return False
+
+#return False if the current call is water
+  if grid[r][c] == 'W':
+    return False
+
+  pos = (r, c)
+#return False if we've already visited this cell
+  if pos in visited:
+    return False
+#mark the cell as visited
+  visited.add(pos)
+#recursively explore all four directions
+  explore(grid, r - 1, c, visited) # up
+  explore(grid, r + 1, c, visited) # down
+  explore(grid, r, c - 1, visited) # left
+  explore(grid, r, c + 1, visited) # right
+#Found new land - part of an island
+  return True
+
+
+#testcase:
+grid = [
+  ['W', 'L', 'W', 'W', 'W'],
+  ['W', 'L', 'W', 'W', 'W'],
+  ['W', 'W', 'W', 'L', 'W'],
+  ['W', 'W', 'L', 'L', 'W'],
+  ['L', 'W', 'W', 'L', 'L'],
+  ['L', 'L', 'W', 'W', 'W'],
+]
+
+#expected result: 3 islands
+print(island_count(grid)) #output: 3
+
+
+
+#minimum island
+#Write a function, minimum_island, that takes in a grid containing Ws and Ls. W represents water and L represent land. The function should return the size of the smallest island. An island is a vertically or horizontally connected region of land
+
+#return the size of the smallest island in the grid
+def minimum_island(grid):
+  visited = set()
+#start with infinity as a minimum
+  min_size = float("inf")
+#iterate over every cell in the grid
+  for r in range(len(grid)):
+    for c in range(len(grid[0])):
+#explore the size of an island starting at this cell
+      size = explore_size(grid, r, c, visited)
+#if its a land cell and smaller than current min, update min
+      if size > 0 and size < min_size:
+        min_size = size
+  return min_size
+
+#recursively explore all connected land tiles and return island size
+def explore_size(grid, r, c, visited):
+#check bounds
+  row_inbounds = 0 <= r < len(grid)
+  col_inbounds = 0 <= c < len(grid[0])
+  if not row_inbounds or not col_inbounds:
+    return 0
+
+#water cell has size 
+  if grid[r][c] == 'W':
+    return 0
+
+  pos = (r, c)
+#already visited
+  if pos in visited:
+    return 0
+  visited.add(pos)
+
+#count this tile and explore in all 4 directions
+  size = 1
+  size += explore_size(grid, r - 1, c, visited) # up
+  size += explore_size(grid, r + 1, c, visited) # down
+  size += explore_size(grid, r, c - 1, visited) # left
+  size += explore_size(grid, r, c + 1, visited) # right
+  return size
+
+
+#testCase:
+grid = [
+  ['W', 'L', 'W', 'W', 'W'],
+  ['W', 'L', 'W', 'W', 'W'],
+  ['W', 'W', 'W', 'L', 'W'],
+  ['W', 'W', 'L', 'L', 'W'],
+  ['L', 'W', 'W', 'L', 'L'],
+  ['L', 'L', 'W', 'W', 'W'],
+]
+
+
+#expected island sized:
+# - one size 2 (top-left island)
+# - one size 5 (center-right island)
+# - one size 4 (bottom-left island)
+#so the smallest is 2
+
+print(minimum_island(grid)) #2 
 
 
 
