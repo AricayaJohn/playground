@@ -363,3 +363,121 @@ print(minimum_island(grid)) #2
 
 
 
+#closest carrot
+#Write a function, closest_carrot, that takes in a grid, a starting row, and a starting column. 
+#In the grid, 'X's are walls, 'O's are open spaces, and 'C's are carrots. The function should return a number representing the length of the shortest path from the starting position to a carrot. You may move up, down, left, right, but cannot pass through walls(X). if there is no possible path to a carrot, then reutn -1. 
+
+from collections import deque  # Import deque for efficient FIFO queue operations
+
+def closest_carrot(grid, starting_row, starting_col):
+# Initialize a set to keep track of visited positions
+  visited = set([ (starting_row, starting_col) ])
+# Initialize a queue with the starting position and distance 0
+  queue = deque([ (starting_row, starting_col, 0) ])
+  
+# Continue while there are positions to explore in the queue
+  while queue:
+# Dequeue the front element: current row, column, and distance
+    row, col, distance = queue.popleft()
+    
+# If the current position has a carrot, return the distance
+    if grid[row][col] == 'C':
+      return distance
+    
+# Define possible movement directions: down, up, right, left
+    deltas = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    
+# Iterate through all possible movement directions
+    for delta in deltas:
+# Extract row and column offsets
+      delta_row, delta_col = delta
+# Calculate the new row and column
+      neighbor_row = row + delta_row
+      neighbor_col = col + delta_col      
+# Create a position tuple
+      pos = (neighbor_row, neighbor_col)
+# Check if the new row is within the grid bounds
+      row_inbounds = 0 <= neighbor_row < len(grid)
+# Check if the new column is within the grid bounds
+      col_inbounds = 0 <= neighbor_col < len(grid[0])
+# If position is in bounds, not visited, and not a wall
+      if row_inbounds and col_inbounds and pos not in visited and grid[neighbor_row][neighbor_col] != 'X':
+# Mark the position as visited
+        visited.add(pos)
+# Enqueue the new position with incremented distance
+        queue.append((neighbor_row, neighbor_col, distance + 1))
+        
+# Return -1 if no carrot is reachable
+  return -1
+
+
+# ---------- Test Case ----------
+grid = [
+  ['O', 'O', 'O', 'O', 'C'],
+  ['O', 'X', 'X', 'O', 'O'],
+  ['O', 'O', 'O', 'X', 'O'],
+  ['C', 'X', 'O', 'O', 'O'],
+]
+
+# Starting at (0, 0), the closest carrot is at (0, 4) and distance is 4
+print(closest_carrot(grid, 0, 0))  # Output: 4
+
+
+
+#longest path
+#write a function, longest_path. that takes in a n adjacency list for a directed acyclic graph. The function should return the length of the longest path within the graph. A path mayy start and end at any two nodes. The length of a path is considered the number of edges in the path, not the number of nodes. 
+
+# Returns the length of the longest path in a directed acyclic graph
+def longest_path(graph):
+  # Dictionary to memoize the longest distance from each node
+  distance = {}
+
+  # Initialize distance of leaf nodes (nodes with no outgoing edges) to 0
+  for node in graph:
+    if len(graph[node]) == 0:
+      distance[node] = 0
+
+  # Traverse each node to compute the longest path from that node
+  for node in graph:
+    traverse_distance(graph, node, distance)
+
+  # Return the maximum value from the distance dictionary
+  return max(distance.values())
+
+# Helper function to compute the longest path starting from a given node
+def traverse_distance(graph, node, distance):
+  # If node's distance is already computed, return it (memoization)
+  if node in distance:
+    return distance[node]
+  
+  # Initialize variable to track the longest path from current node
+  largest = 0
+
+  # Explore all neighbors of the current node
+  for neighbor in graph[node]:
+    # Recursively compute the distance from each neighbor
+    attempt = traverse_distance(graph, neighbor, distance)
+    # Update largest if a longer path is found
+    if attempt > largest:
+      largest = attempt
+
+  # Store the computed distance (1 + longest neighbor path) for current node
+  distance[node] = 1 + largest
+  return distance[node]
+
+
+# --------- Test Case ---------
+# Sample graph: Directed Acyclic Graph (DAG)
+# a -> b -> d
+#  \        ^
+#   -> c ---|
+graph = {
+  'a': ['b', 'c'],
+  'b': ['d'],
+  'c': ['d'],
+  'd': []
+}
+
+# Longest path: a -> b -> d or a -> c -> d (length = 2)
+# Including the starting node: path length is 2 (edges)
+print(longest_path(graph))  # Output: 2
