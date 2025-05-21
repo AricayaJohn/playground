@@ -481,3 +481,319 @@ graph = {
 # Longest path: a -> b -> d or a -> c -> d (length = 2)
 # Including the starting node: path length is 2 (edges)
 print(longest_path(graph))  # Output: 2
+
+
+#semesters required
+#write a function, semesters_required, that takes in a number of courses (n) and a list of prerequisites as arguments. Courses have ids ranging from 0 through n - 1. Asingle prerequisite of (A, B) means that course A must be taken before course B. Return the minimun number of semesters required to complete all n courses. There is no limit on how many courses you can take in a single semester, as long as the prerequisites of a course are satisfied before taking it.
+
+
+#note that given prerequisite(A, B), you cannot take course A and course B concurrently in the same semester. You must take A in some semester before B.
+
+# Calculates the minimum number of semesters required to complete all courses
+def semesters_required(num_courses, prereqs):
+  # Build a directed graph where each course points to its prerequisites
+  graph = build_graph(num_courses, prereqs)
+
+  # Dictionary to store the longest prerequisite chain for each course
+  distance = {}
+
+  # Initialize distance for courses with no prerequisites (leaf nodes) to 1 semester
+  for course in range(num_courses):
+    if len(graph[course]) == 0:
+      distance[course] = 1
+
+  # Traverse each course to compute the longest prerequisite chain
+  for course in range(num_courses):
+    traverse_distance(graph, course, distance)
+
+  # The longest chain determines the number of semesters needed
+  return max(distance.values())
+
+# Recursively calculates the number of semesters required for a course
+def traverse_distance(graph, node, distance):
+  # If the course's semester count is already computed, return it
+  if node in distance:
+    return distance[node]
+
+  # Track the maximum semesters required among all prerequisites
+  max_distance = 0
+
+  # Explore each prerequisite of the current course
+  for neighbor in graph[node]:
+    # Recursively compute the semesters required for the prerequisite
+    neighbor_distance = traverse_distance(graph, neighbor, distance)
+    # Update the maximum if a longer prerequisite chain is found
+    if neighbor_distance > max_distance:
+      max_distance = neighbor_distance
+
+  # Store the computed semester count (1 + max of prerequisites)
+  distance[node] = 1 + max_distance
+  return distance[node]
+
+# Builds an adjacency list representing course prerequisites
+def build_graph(num_courses, prereqs):
+  # Initialize a graph with empty lists for each course
+  graph = {}
+  for course in range(num_courses):
+    graph[course] = []
+
+  # Populate the graph with directed edges (course -> prerequisite)
+  for prereq in prereqs:
+    a, b = prereq
+    graph[a].append(b)
+
+  return graph
+
+
+# --------- Test Case ---------
+# There are 6 courses (0 to 5)
+# Prerequisites: 0 -> 1, 1 -> 2, 2 -> 3, 3 -> 4, 4 -> 5
+# You must take them in order from 0 to 5, which takes 6 semesters
+num_courses = 6
+prereqs = [
+  (0, 1),
+  (1, 2),
+  (2, 3),
+  (3, 4),
+  (4, 5)
+]
+
+print(semesters_required(num_courses, prereqs))  # Output: 6
+
+
+
+
+#bestbridge
+# Write a function, best_bridge, that takes in a grid as an argument. The grid contains water(W) and land(L). there are exactly two islands in the grid . An island is a vertically or horizontally connected region of land. Return the minimum length bridge needed to connect the two islands. A bridge does not need to form a straight line.
+
+from collections import deque
+
+# Returns the shortest bridge (number of water tiles) to connect two islands
+def best_bridge(grid):
+    main_island = None
+
+    # Find the first island in the grid
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            potential_island = traverse_island(grid, r, c, set())
+            if len(potential_island) > 0:
+                main_island = potential_island
+                break  # Stop searching once the first island is found
+        if main_island:
+            break
+
+    # Prepare for BFS
+    visited = set(main_island)  # Start with the first island's tiles
+    queue = deque()
+
+    # Add all positions from the first island to the queue with distance 0
+    for r, c in main_island:
+        queue.append((r, c, 0))
+
+    # Perform BFS to find the shortest bridge
+    while queue:
+        row, col, distance = queue.popleft()
+
+        # If we reach a land tile not part of the first island, return bridge length
+        if grid[row][col] == 'L' and (row, col) not in main_island:
+            return distance - 1  # Exclude the final land tile
+
+        # Try all 4 directions (up, down, left, right)
+        for delta_row, delta_col in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            neighbor_row = row + delta_row
+            neighbor_col = col + delta_col
+            neighbor_pos = (neighbor_row, neighbor_col)
+
+            # If it's in bounds and not visited yet
+            if inbounds(grid, neighbor_row, neighbor_col) and neighbor_pos not in visited:
+                visited.add(neighbor_pos)
+                queue.append((neighbor_row, neighbor_col, distance + 1))
+
+    return -1  # Should never happen if there are two islands
+
+# Check if a position is inside the grid
+def inbounds(grid, row, col):
+    return 0 <= row < len(grid) and 0 <= col < len(grid[0])
+
+# Use DFS to collect all land tiles ('L') connected to a starting position
+def traverse_island(grid, row, col, visited):
+    if not inbounds(grid, row, col) or grid[row][col] == 'W':
+        return visited
+
+    pos = (row, col)
+    if pos in visited:
+        return visited
+
+    visited.add(pos)
+
+    # Explore in all 4 directions
+    traverse_island(grid, row - 1, col, visited)
+    traverse_island(grid, row + 1, col, visited)
+    traverse_island(grid, row, col - 1, visited)
+    traverse_island(grid, row, col + 1, visited)
+
+    return visited
+
+# --------- Test Case ---------
+
+grid = [
+  ['W', 'W', 'W', 'L', 'L'],
+  ['W', 'L', 'W', 'L', 'L'],
+  ['W', 'L', 'W', 'W', 'W'],
+  ['W', 'L', 'L', 'W', 'W'],
+  ['W', 'W', 'W', 'W', 'W'],
+  ['L', 'L', 'W', 'W', 'W']
+]
+
+# Expected output: 2 (shortest bridge is 2 water tiles between islands)
+print(best_bridge(grid))
+
+
+
+#has cycle
+#write a function, has_cycle, that takes in an object representing the adjacency list of a directed graph. The function should return a boolean indicating whether or not the graph contains a cycle.
+
+# Detects if a directed graph has a cycle
+def has_cycle(graph):
+  # Set to store fully visited (processed) nodes
+  visited = set()
+  
+  # Iterate over all nodes in the graph
+  for start_node in graph:
+    # Start DFS from unvisited nodes; use a visiting set to track recursion stack
+    if cycle_detect(graph, start_node, set(), visited):
+      return True  # Cycle found
+  
+  # If no cycle found in any component, return False
+  return False
+
+# Helper function for DFS-based cycle detection
+def cycle_detect(graph, node, visiting, visited):
+  # If the node has already been fully processed, no cycle from it
+  if node in visited:
+    return False
+
+  # If the node is currently in the recursion stack, a cycle is found
+  if node in visiting:
+    return True
+
+  # Mark the node as being visited in the current path
+  visiting.add(node)
+
+  # Recursively visit all neighbors
+  for neighbor in graph[node]:
+    if cycle_detect(graph, neighbor, visiting, visited):
+      return True  # Cycle found in a deeper call
+
+  # After visiting all neighbors, remove from current path and mark as visited
+  visiting.remove(node)
+  visited.add(node)
+
+  return False  # No cycle found from this node
+
+
+# --------- Test Case ---------
+
+# Graph with a cycle: A -> B -> C -> A
+cyclic_graph = {
+  'A': ['B'],
+  'B': ['C'],
+  'C': ['A'],
+  'D': ['E'],
+  'E': []
+}
+
+# Graph without a cycle
+acyclic_graph = {
+  'A': ['B'],
+  'B': ['C'],
+  'C': [],
+  'D': ['E'],
+  'E': []
+}
+
+print(has_cycle(cyclic_graph))  # Output: True
+print(has_cycle(acyclic_graph)) # Output: False
+
+
+
+
+#prereqs possible
+#write a function, prereqs_possible, that takes in a number of courses(n) and prerequisites as arguments. courses have ids ranging from 0 through n -1. A single preprequisite of (A, B) means that course A must be taken before course B. The function should return a boolean indicating whether or not it is possible to complete all courses.
+
+# Determines if it is possible to complete all courses given prerequisite constraints
+def prereqs_possible(num_courses, prereqs):
+  # Build the graph representing course prerequisites
+  graph = build_graph(num_courses, prereqs)
+
+  # 'visiting' tracks nodes in the current DFS recursion stack
+  visiting = set()
+
+  # 'visited' tracks nodes that have been fully explored and found cycle-free
+  visited = set()
+  
+  # Try to detect cycles starting from every course (node)
+  for node in range(0, num_courses):
+    if has_cycle(graph, node, visiting, visited):
+      return False  # If a cycle is found, course completion is impossible
+    
+  return True  # If no cycles are found, all courses can be completed
+
+# Helper function to detect cycles using DFS
+def has_cycle(graph, node, visiting, visited):
+  # If node already fully processed, no cycle from this path
+  if node in visited:
+    return False
+
+  # If node is in current recursion stack, a cycle exists
+  if node in visiting:
+    return True
+  
+  # Add node to current recursion stack
+  visiting.add(node)
+  
+  # Recursively check all prerequisites (neighbors)
+  for neighbor in graph[node]:
+    if has_cycle(graph, neighbor, visiting, visited):
+      return True  # Cycle detected in deeper recursion
+  
+  # Done exploring this node; remove from recursion stack and mark as visited
+  visiting.remove(node)
+  visited.add(node)
+  
+  return False  # No cycle found
+
+# Builds an adjacency list for the graph of course prerequisites
+def build_graph(num_courses, prereqs):
+  graph = {}
+
+  # Initialize all courses as keys with empty prerequisite lists
+  for i in range(0, num_courses):
+    graph[i] = []
+    
+  # Fill in the directed edges from prereqs: course A requires course B
+  for prereq in prereqs:
+    a, b = prereq
+    graph[a].append(b)
+    
+  return graph
+
+
+# --------- Test Cases ---------
+
+# Test case with a cycle (0 -> 1 -> 2 -> 0)
+num_courses1 = 3
+prereqs1 = [(0, 1), (1, 2), (2, 0)]
+print(prereqs_possible(num_courses1, prereqs1))  # Output: False
+
+# Test case with no cycle (0 -> 1 -> 2)
+num_courses2 = 3
+prereqs2 = [(0, 1), (1, 2)]
+print(prereqs_possible(num_courses2, prereqs2))  # Output: True
+
+# Test case with independent courses and no prereqs
+num_courses3 = 4
+prereqs3 = []
+print(prereqs_possible(num_courses3, prereqs3))  # Output: True
+
+
