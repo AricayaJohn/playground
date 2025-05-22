@@ -797,3 +797,23 @@ prereqs3 = []
 print(prereqs_possible(num_courses3, prereqs3))  # Output: True
 
 
+#is an adjacency-list the only way to represent a graph?
+#No graphs representations are divers. We can have adjacency-list, edge-lists, grid-graphs
+
+#what is the difference between a directed and undirected graph?
+# In a directed graph, edges can only be traveled in one directioon. In an undirected graph, edges can be traveled both ways
+
+#what general algorithm is best suited to find the shortest path b/w two nodes in a graph?
+#breadth-first is best suider because all directions are explored evenly. The first path found via bfs is the shortest path
+
+
+#What DS is typically well suited to implement 'visited in a graph traversal'
+# a set because it has 0(1) look up
+
+#what data structure in python is used to represent a typical adjacency list?
+#Adictionary where each node id points to a list of the node's neighbors
+
+#how is a graph different from a tree?
+#A graph may not have a root and there may be multiple paths between two nodes. In a tree there is only a single unique path between nodes
+
+
