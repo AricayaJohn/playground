@@ -12,13 +12,17 @@
 #     4^2 = 16 == 4 ** 2
 
 
-"""python offers a solution: 
+"""
+python offers a solution: 
 Preview: Docs A string is a sequence of characters contained within a pair of single quotes or double quotes.
 multi-line strings
-. By using three quote-marks "(""" or ''')" instead of one, we tell the program that the string doesnt end until the next triple-quote. """
+. By using three quote-marks "(""" """ or ''' ''')" instead of one, we tell the program that the string doesnt end until the next triple-quote. 
+
+"""
 
 " using \n to seperate descriotions"
 " using \n\n to add 2 enters"
 
 
+# : colon -> tells the computer that what's coming next is what should be executed if the condition is met.
 
