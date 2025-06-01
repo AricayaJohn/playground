@@ -320,3 +320,81 @@ def _summing_squares(n, memo):
 #testcase:
 print(summing_squares(8)) #expected output: 2
 print(summing_squares(12)) #expected output: 3
+
+
+
+#counting change
+#write a function, counting_change, that takes in an amount and a list of coins. The function should return the number of different ways it is possible to make change for a given amount using coins.
+
+#return the number of ways to make 'amount' using given 'coins'
+def counting_change(amount, coins):
+#begin recursion with memoization and coin index starting at 0
+    return _counting_change(amount, coins, 0, {})
+#recursive helper function with memoization
+def _counting_change(amount, coins, i, memo):
+#memoization key includes current amount and coin index
+    key = (amount, i)
+    if key in memo:
+        return memo[key]
+#base case: exact change achieved
+    if amount == 0:
+        return 1
+#base case: no coins left to use
+    if i == len(coins):
+        return 0
+#choose the current coin
+    coin = coins[i]
+#initialize the total number of combinations
+    total_count = 0
+#try using 0 up to the max number of current coins possible
+    for qty in range(0, (amount // coin) + 1):
+#Remaining amount after using 'qty' coins
+        remainder = amount - (qty * coin)
+#recursively count combinations using next coin
+        total_count += _counting_change(remainder, coins, i + 1, memo)
+#memoize and return the result
+    memo[key] = total_count
+    return total_count
+
+#testcase:
+print(counting_change(4, [1, 2, 3])) #Expected output: 4
+print(counting_change(8, [1, 2, 4])) #expected output: 10
+
+
+
+#array stepper
+"""
+ write a function, array_stepper, that takes in a list of numbers as an argument. You start at the first position of thelist. The function should return a boolean indicating whether or not it is possible to reach the last position of the list. When situated at some position of the list, you may take the maximum number of steps based on the number of position.
+"""
+#determine whether you can reach the end of the array
+#starting at index 0, moving up to numbers[i] steps at each position
+def array_stepper(numbers):
+#starting recursive function with memoization and index 0
+    return _array_stepper(numbers, 0, {})
+#recursive helper function that checks if you can reach the end from index 'i'
+def _array_stepper(numbers, i, memo):
+#return memoized result if already computed
+    if i in memo:
+        return memo[i]
+#Basecase: if index is at or beyond the last element, return True
+    if i >= len(numbers) - 1:
+        return True
+#Get the maximum number of steps allowed from current position
+    max_step = numbers[i]
+#Try each possible step from 1 to max_step
+    for step in range(1, max_step + 1):
+#recursively check if you can reach the end from the new position
+        if _array_stepper(numbers, i + step, memo):
+#memoize and return True if a path is found
+            memo[i] = True
+            return True
+# If no path works, memoize and return False
+    memo[i] = False
+    return False
+
+#testcase:
+# Example: can step 2 from index 0 to reach index 2, then 3 steps to end
+print(array_stepper([2, 4, 2, 0, 0, 1]))  # Expected output: True
+
+# Example: stuck at index 2, cannot reach end
+print(array_stepper([3, 1, 0, 5]))  # Expected output: False

@@ -26,3 +26,24 @@ multi-line strings
 
 # : colon -> tells the computer that what's coming next is what should be executed if the condition is met.
 
+"""
+syntax error means there is something wromg with the way your program is written -- punctuation that does not belong, a command where it is not expected, or a missing parenthesis can all trigger a syntax error
+"""
+
+
+"""
+Name error:
+when interpreter detects a variable that is unknown
+if a variable is used before it has been assigned a value or a variable name is spelled differently than the point at which it was defined
+"""
+
+"""
+TypeError: 
+is reported by the python interpreter when an operation is applied to a varriable of an inappropriate type
+"""
+
+# importing random
+"""
+import random
+#create the range
+random.randint(1, 9)
