@@ -398,3 +398,85 @@ print(array_stepper([2, 4, 2, 0, 0, 1]))  # Expected output: True
 
 # Example: stuck at index 2, cannot reach end
 print(array_stepper([3, 1, 0, 5]))  # Expected output: False
+
+
+
+#max palin subsequence
+"""
+write a function, max_palin_subsequence, that takes in a string as an argument. The function should return the length of the longest subsequence of the string that is also a palindrome.
+
+A subsequence of a string can be created by deleting any characters of a string, while maintaining the relative order of the characters. 
+"""
+#Returns the length of the longest palindromic subsequence in the given string
+def max_palin_subsequence(string):
+#call the helper function with memoization, strating from full string bounds
+    return _max_palin_subsequence(string, 0, len(string) - 1, {})
+#recursive helper function with memoization
+def _max_palin_subsequence(string, i, j, memo):
+#create a memoization key for the current substring bounds
+    key = (i, j)
+#return cached result if this problem has already been solved
+    if key in memo:
+        return memo[key]
+#basecase: single characeter is a palindrome of length 1
+    if i == j:
+        return 1
+#basecase invalid substring left index crossed right index
+    if i > j:
+        return 0
+#if characters at both ends match, count them and recurse inward
+    if string[i] == string[j]:
+        memo[key] = 2 + _max_palin_subsequence(string, i + 1, j -1, memo)
+    else:
+        #if they dont match, recursively check two options and take the max:
+        #exclude the left character
+        #exclude the right character
+        memo[key] = max(
+            _max_palin_subsequence(string, i + 1, j, memo),
+            _max_palin_subsequence(string, i, j - 1, memo)
+        )
+#return the result for current substring bounds
+    return memo[key]
+
+#testcase:
+print(max_palin_subsequence("luwxult")) # => 5
+
+
+
+#overlap subsequence
+"""
+Write a function, overlap_subsequence, that takes in two strings as arguments. The function should return the length of the longest overlapping subsequence.
+
+A subsequence of a string can be created by deleting any characters of the string, while maintaining the relative order of characters
+"""
+
+#Returns the length of the longest overlapping(common) subsequence between two strings
+def overlap_subsequence(string_1, string_2):
+#call the recursive helper with indices starting at 0 for both string
+    return _overlap_subsequence(string_1, string_2, 0, 0, {})
+#helper function that uses recursion and memoization
+def _overlap_subsequence(string_1, string_2, i, j, memo):
+#create a unique key for the current indices of both strings
+    key = (i, j)
+#return the memoized result if already computed
+    if key in memo:
+        return memo[key]
+#basecase: if weve reached the end of either string no more subsequence can be found
+    if i == len(string_1) or j == len(string_2):
+        return 0
+#if characters match, include this character and move both indices forward
+    if string_1[i] == string_2[j]:
+        memo[key] = 1 + _overlap_subsequence(string_1, string_2, i + 1, j + 1, memo)
+    else:
+        #if they dont match, explore both possibilities:
+        # advance in string_1
+        # advance in string_2
+        # and take the longer result
+        memo[key] = max(
+            _overlap_subsequence(string_1, string_2, i + 1, j, memo),
+            _overlap_subsequence(string_1, string_2, i, j + 1, memo)
+        )
+    return memo[key]
+
+#test case:
+print(overlap_subsequence("dogs", "daogt")) # expeceted: 3
