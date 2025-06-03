@@ -480,3 +480,37 @@ def _overlap_subsequence(string_1, string_2, i, j, memo):
 
 #test case:
 print(overlap_subsequence("dogs", "daogt")) # expeceted: 3
+
+
+#can concat
+""" 
+write a function, can_concat, that takes in a string and a list of words as arguments. The function should return boolean indicating whether or not it is possible to concatenate words of the list together to form the string.
+"""
+
+#Returns True if string 's' can be constructed by concatenating words from the 'words' list
+def can_concat(s, words):
+#start recursive helper from index 0 and an empty memoization dictionary
+    return _can_concat(s, words, 0, {})
+#recursive helper function with memoization
+def _can_concat(s, words, i, memo):
+#if this index has already been evaluated, return the stored result
+    if i in memo:
+        return memo[i]
+#basecase: if we've reached the end of the string, it's a valid concatenation
+    if i == len(s):
+        return True
+#Try each word to see if it matches the current position in the string
+    for word in words:
+#check if the substring starting at index 'i' begins with 'word'
+        if s.startswith(word, i):
+#if it does, recursively check the remainder of the string
+            if _can_concat(s, words, i + len(word), memo) == True:
+#if successful, memoize and return True
+                memo[i] = True
+                return True
+#if no words leads to a solution, store and return false
+    memo[i] = False
+    return False
+
+# Basic cases
+print(can_concat("oneisnone", ["one", "is", "none"]))      # True
