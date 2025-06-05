@@ -514,3 +514,82 @@ def _can_concat(s, words, i, memo):
 
 # Basic cases
 print(can_concat("oneisnone", ["one", "is", "none"]))      # True
+
+
+#quickest concat
+"""
+write a function, quickest_concat, that takes in a string and a list of words as arguments. The function should return the minimum number of words needed to build the string by concatenating words of the list. If it is not possible to build the string, then return -1.
+"""
+
+#mainfunction to find the minimum number of words needed to concatenate into strings 's' using elements from 'words' list
+def quickest_concat(s, words):
+#call the recursive helper with initial index 0 and empty memoization dictionary
+    result = _quickest_concat(s, words, 0, {})
+#if the result is infinity, it means no valid concatenation was found; return -1
+    if result == float('inf'):
+        return -1
+    else:
+#otherwise, return the minimum number of words used
+    return result
+
+#helper function that uses recursion and memoization to find the quickest way to build the suffix of 's' starting from index 'i'
+def _quickest_concat(s, words, i, memo):
+#if this subproblem has already been solved, return the cached result
+    if i in memo:
+        return memo[i]
+#if weve reached the end of the string, no more words are needed 
+    if i == len(s):
+        return 0
+#initialize the minimum number of words to infinity (representing an impossible case initially)
+    min_words = float('inf')
+#try each word in the list to see if it matches the string at position 'i'
+    for word in words:
+#check if the word matches the substring of 's' starting at index 'i'
+        if s.startswith(word, i):
+#if it matches, recursively try to solve the remaining substring
+            attempt = 1 + _quickest_concat(s, words, i + len(word), memo)
+#update the minimum if this attempt uses fewer words
+            min_words = min(attempt, min_words)
+#cache the result for this subproblem
+    memo[i] = min_words
+#Return the minimum number of words needed starting from index 'i'
+    return min_words
+
+#testcase:
+#explanation: "caut" + "ion" forms "caution" using 2 words
+print(quickest_concat("caution", ["ca", "ion", "caut", "ut", "on"])) #output: 2
+
+
+
+
+
+#first sttep to coding dynamic programming:
+""" 
+write a brute-force recursive solution first. 
+"""
+
+#is memoization the only way to implement dynamic programming
+"""
+no but memoization is the most versitile and easiest to master
+"""
+
+#for memoization how can you identify what value to store in the memo?
+"""
+You should always store the value that is returned in the recursive case
+"""
+
+
+#how can we identify that a problem requireds dynamic programming?
+"""
+Try to draw out the logic as a recursion tree. Finding dubplicate substrees mean that there are dubplicate subproblems, so dynamic programming can apply
+"""
+
+#for memoization, how can you identify what argument(s) to use as the memo keys?
+"""
+The memo keys should always contain the arguments that vary during the recursion. Arguments that dont change, do not need to be in the key.
+"""
+
+#what is memoization?
+"""
+Memoization is a design pattern where we cache return values based on the arguments of a function in order to avoid duplicate computation.
+"""

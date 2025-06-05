@@ -42,8 +42,17 @@ TypeError:
 is reported by the python interpreter when an operation is applied to a varriable of an inappropriate type
 """
 
+"""
+Index error:
+Accessing an element that does not exist produces an IndexError.
+"""
+
 # importing random
 """
 import random
 #create the range
 random.randint(1, 9)
+"""
+
+#append
+#adds value to the end of the list
