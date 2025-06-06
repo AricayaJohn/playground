@@ -19,7 +19,7 @@ multi-line strings
 . By using three quote-marks "(""" """ or ''' ''')" instead of one, we tell the program that the string doesnt end until the next triple-quote. 
 
 """
-
+"(** \n must be inside a print statement)"
 " using \n to seperate descriotions"
 " using \n\n to add 2 enters"
 
@@ -56,3 +56,41 @@ random.randint(1, 9)
 
 #append
 #adds value to the end of the list
+
+
+"""
+Python list methods
+.count()- A list method to count the number of occurences of an element in a list
+.insert()- A list method to insert an element into a specific index of a list
+    The order and number of the inputs is important. The .insert() method expects two inputs, the first being a numerical index, followed by any value as the second input
+    e.g
+     store_line.insert(2, "Vikor")
+print(store_line) 
+
+.pop() - A list method to remove an element
+         from a SPECIFIC INDEX or from the END of the list 
+range() - A built in python function to create a sequence of integers
+   
+   If we use a third input, we can create a list that “skips” numbers.
+    my_range2 = range(2, 9, 2)
+print(list(my_range2))
+    [2, 4, 6, 8]
+    
+len() - A built in python function to get the length of a list 
+.sort()/sorted() - A method and a builtin function to sort a list 
+
+
+Slicing:
+start is the index of the first element that we want to include in our selection. In this case, we want to start at "b", which has index 1.
+end is the index of one more than the last index that we want to include. The last element we want is "f", which has index 5, so end needs to be 6.
+
+letters = ["a", "b", "c", "d", "e", "f", "g"]
+sliced_list = letters[1:6]
+print(sliced_list)
+["b", "c", "d", "e", "f"]
+
+Slicing is exclusive. which means that pring until 6 but not including 6 index
+
+list[start:end]
+start: The index where slicing begins (INCLUSIVE).
+end: The index where slicing stops (EXCLUSIVE – meaning the element at this index is not included).
