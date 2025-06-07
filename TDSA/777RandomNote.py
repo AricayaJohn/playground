@@ -61,6 +61,11 @@ random.randint(1, 9)
 """
 Python list methods
 .count()- A list method to count the number of occurences of an element in a list
+   
+   letters = ["m", "i", "s", "s", "i", "s", "s", "i", "p", "p", "i"]
+    num_i = letters.count("i")
+print(num_i) #4
+
 .insert()- A list method to insert an element into a specific index of a list
     The order and number of the inputs is important. The .insert() method expects two inputs, the first being a numerical index, followed by any value as the second input
     e.g
@@ -77,7 +82,14 @@ print(list(my_range2))
     [2, 4, 6, 8]
     
 len() - A built in python function to get the length of a list 
+
+
 .sort()/sorted() - A method and a builtin function to sort a list 
+Often, we will want to sort a list in either numerical (1, 2, 3, …) or alphabetical (a, b, c, …) order.
+sort in REVERSE:
+names.sort(reverse=True)
+print(names)
+
 
 
 Slicing:
