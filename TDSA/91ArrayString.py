@@ -103,10 +103,47 @@ print(subarray_sum_count([1, 1, 1, 1], 2)) # -> 3
 
 
 
-#merge
+#merge sort
+""" 
+Write a function, merge_sort, that takes in a list of numbers as an argument. Thefunction should return a new list containing elements of the original list sorted in ascending order. Your function must implement the merge sort algorithm.
+"""
+#import deque for efficient popping from the front of lists
+from collections import deque
+#recursively merge sort function that divides and conquers
+def merge_sort(nums):
+#basecase: a list with 0 or 1 element is already sorted
+    if len(nums) <= 1:
+        return nums
+#find the midpoint to split the list
+    mid_idx = len(nums) // 2
+#recursively sort the left and hald
+    left_sorted = merge_sort(nums[:mid_idx])
+#recursively sort the right half
+    righ_sorted = merge_sort(nums[mid_idx:])
+#merge the sorted halves and return the sorted list
+    return merge(left_sorted, righ_sorted)
 
+#helper function to merge two sorted lists into one sorted list
+def merge(list_1, list_2):
+#convert both lists to deques for 0(1) pops from the front
+    list_1 = deque(list_1)
+    list_2 = deque(list_2)
+#this will hold the merged and sorted elements
+    merged = []
+#hile both deques have elements, pop the smallest front element into merged
+    while list_1 and list_2:
+        if list_1[0] < list_2[0]:
+            merged.append(list_1.popleft())
+        else:
+            merged.append(list_2.popleft())
+#append the remaining elements(if any) from both list
+    merged += list_1
+    merged += list_2
+#return the final merged and sorted list
+    return merged
 
-
+#testcase:
+print(merge_sort([4, 1, 6, 2, 5, 3])) #output: [1, 2, 3, 4, 5, 6]
 
 
 

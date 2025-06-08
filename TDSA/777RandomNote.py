@@ -106,3 +106,17 @@ Slicing is exclusive. which means that pring until 6 but not including 6 index
 list[start:end]
 start: The index where slicing begins (INCLUSIVE).
 end: The index where slicing stops (EXCLUSIVE – meaning the element at this index is not included).
+"""
+
+#combining list using zip
+"""
+names = ["Jenny", "Alexus", "Sam", "Grace"]
+heights = [61, 70, 67, 64]
+
+names_and_heights = zip(names, heights)
+print(names_and_heights)
+# <zip objects at 0x7f1631e86b48
+converted_list = list(names_and_heights)
+print(converted_list)
+[('Jenny', 61), ('Alexus', 70), ('Sam', 67), ('Grace', 64)]
+"""
