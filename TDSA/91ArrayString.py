@@ -147,3 +147,34 @@ print(merge_sort([4, 1, 6, 2, 5, 3])) #output: [1, 2, 3, 4, 5, 6]
 
 
 
+#Combined Intervals
+"""
+Write a funtion, combined_intervals, that takes in a list of intervals as an argument. Each interval is a tuple containing a pair of numbers representing a start and endtime. Your function should combine overlapping intervals and return a list containing the combined intervals.
+"""
+
+#Function to combine overlapping intervals from a list of (start, end)
+def combine_intervals(intervals):
+#sort the intervals by their starting values
+    sorted_intervals = sorted(intervals, key=lambda x :x[0])
+#initialize the result list with the first interval
+    combined = [sorted_intervals[0]]
+#iterate over the remaining intervals
+    for current_interval in sorted_intervals[1:]:
+#Get the last interval in the combined list
+        last_start, last_end = combined[-1]
+#get the current interval's stsart and end
+        current_start, current_end = current_interval
+#check if current interval overlaps with the last one in combined
+        if current_start <= last_end:
+#if it does and the current interval extends further, merge them 
+            if current_end > last_end:
+                combined[-1] = (last_start, current_end)
+        else:
+#if it doesn't overlap, just add it to the combined list
+            combined.append(current_interval)
+#Return the final list of non-overlapping, merged intervals
+    return combined
+
+#testcase:
+intervals = [(1, 3), (2, 6), (8, 10), (9, 12)]
+print(combine_intervals(intervals)) #output: [(1,6), (8,12)]

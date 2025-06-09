@@ -120,3 +120,17 @@ converted_list = list(names_and_heights)
 print(converted_list)
 [('Jenny', 61), ('Alexus', 70), ('Sam', 67), ('Grace', 64)]
 """
+
+#using break
+#When the program hits a break statement it immediately terminates a loop. For example:
+
+"""
+using continue 
+
+for i in big_number_list:
+  if i <= 0:
+    continue
+  print(i)
+
+When our loop first encountered an element (-1) that met the conditions of the if statement, it checked the code inside the block and saw the continue. When the loop then encounters a continue statement it immediately skips the current iteration and moves onto the next element in the list (4).
+"""
