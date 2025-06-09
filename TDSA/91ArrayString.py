@@ -178,3 +178,45 @@ def combine_intervals(intervals):
 #testcase:
 intervals = [(1, 3), (2, 6), (8, 10), (9, 12)]
 print(combine_intervals(intervals)) #output: [(1,6), (8,12)]
+
+
+
+#binary search
+"""
+write a function, binary_search, that takes in a sorted list of numbers and a target. The function should return the index where the target can be found within the list. If the target is not found in the list, then return -1.
+"""
+#function to perform binary search on a sorted list of numbers
+def binary_search(numbers, target):
+#initialize the lower and uper bounds of the search space
+    lo = 0
+    hi = len(numbers) - 1
+#Continue the loop as long as the search space is valid
+    while lo <= hi:
+#calculate the midpoint index
+        mid = (lo + hi) // 2
+#if the target is less than the midpoint value, search the right half
+        if target < numbers[mid]:
+            hi = mid - 1
+#if the target is greater than the midpoint value search the right half
+        elif target > numbers[mid]:
+            lo = mid + 1
+#if the target matches the midpoint value, return index
+        else:
+            return mid
+#if the loop ends, the target was not found; return -1
+    return -1
+
+#test case:
+numbers = [1, 3, 5, 7, 9, 11]
+target= 7
+print(binary_search(numbers, target)) #: 3
+
+
+
+#lexical order
+"""
+Write a function, lexical_order, that takes in 2 words and an alphabet string as an argument. The function should return True if the first word should appear before the secod word if lexically-ordered according to the given alphabet order. If the second word should apppear first, then the return False.
+"""
+
+
+
