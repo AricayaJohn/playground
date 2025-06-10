@@ -217,6 +217,29 @@ print(binary_search(numbers, target)) #: 3
 """
 Write a function, lexical_order, that takes in 2 words and an alphabet string as an argument. The function should return True if the first word should appear before the secod word if lexically-ordered according to the given alphabet order. If the second word should apppear first, then the return False.
 """
+#function to determine if word_1 comes before word_2 in a custome alphabet order
+def lexical_order(word_1, word_2, alphabet):
+#determine the maximum length to compare each character in both words
+    length = max(len(word_1), len(word_2))
+#loop through each character index up to the longest word's length
+    for i in range(length):
+#get the index of the character in word_1 from the custom alphabet, or assign -infinity if the word_1 is shorter (treated as smaller)
+        value_1 = alphabet.index(word_1[i]) if i < len(word_1) else float('-inf')
+#get the index of the character in word_2 from the custom alphabet, or assign -infinity if word_2 is shorter
+        value_2 = alphabet.index(word_2[i]) if i < len(word_2) else float('-inf')
+# if word_1's character comes earlier in the alphabet, return True
+        if value_1 < value_2:
+            return True
+#if word_2's character comes earlier, word_1 is greater -> False
+        elif value_2 < value_1:
+            return False
+#if all characters are the same up to the longest lenggth, treat word_1 as earlier
+    return True
 
+#testcase
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+print(lexical_order("apple", "banana", alphabet))  # Output: True (apple comes before banana)
 
-
+# Test with custom alphabet
+custom_alphabet = "zyxwvutsrqponmlkjihgfedcba"
+print(lexical_order("apple", "banana", custom_alphabet))  # Output: False (reverse order)
