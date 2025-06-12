@@ -243,3 +243,40 @@ print(lexical_order("apple", "banana", alphabet))  # Output: True (apple comes b
 # Test with custom alphabet
 custom_alphabet = "zyxwvutsrqponmlkjihgfedcba"
 print(lexical_order("apple", "banana", custom_alphabet))  # Output: False (reverse order)
+
+
+
+#detect dictionary
+"""
+write a function, detectDictionary, that takes in a dictionary of words and an alphabet string. The function should return a boolean indicating whether or not all word of the dictionary are lexically-ordered according to the alphabet
+"""
+#function to determine if a list of words is sorted according to a given custom alphabet
+def detect_dictionary(dictionary, alphabet):
+#loop through each consecutive pair of words in the dictionary
+    for i in range(0, len(dictionary) - 1):
+        current = dictionary[i]
+        next = dictionary[i + 1]
+#if the current word does not come before the next word in the custom order, return False
+        if not lexical_order(current, next, alphabet):
+            return False
+#if all word pairs are in correct order, return True
+    return True
+#function to compare two words according to a custom alphabet order
+def lexical_order(word_1, word_2, alphabet):
+#determine the length of the longer word to handle uneven word length
+    length = max(len(word_1), len(word_2))
+#loop through each character index up to the longest word's lenght
+    for i in range(lenghth):
+#get the index of the character in word_1 from the custom alphabet, or use -inf if word_1 ends
+        value_1 = alphabet.index(word_1[i]) if i < len(word_1) else float('-inf')
+#get the index of the character in word_2 from the custom alphabet, or use the -inf if word_2 ends
+        value_2 = alphabet.index(word_2[i]) if i < len(word_2) else float('-inf')
+#if word_1's character comes before word_2's, its in order -> return True
+        if value_1 < value_2:
+            return True
+#if word_1's character comes after word_2's its out of order -> return False
+        elif value_2 < value_1:
+            return False
+#if all characters are equal(or one word is a prefix of the other) consider it sorted
+    return True
+    

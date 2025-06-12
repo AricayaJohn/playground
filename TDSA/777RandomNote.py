@@ -134,3 +134,9 @@ for i in big_number_list:
 
 When our loop first encountered an element (-1) that met the conditions of the if statement, it checked the code inside the block and saw the continue. When the loop then encounters a continue statement it immediately skips the current iteration and moves onto the next element in the list (4).
 """
+
+#Difference between Parameters VS Arguments
+"""
+Parameters are the "variables" in a function definition.
+Arguments are the actual values passed into the function.
+"""
