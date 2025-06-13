@@ -140,3 +140,88 @@ When our loop first encountered an element (-1) that met the conditions of the i
 Parameters are the "variables" in a function definition.
 Arguments are the actual values passed into the function.
 """
+"""
+Arguments:
+1. Positional Arguments
+
+These are the most basic type of arguments.
+They are called "positional" because their values are assigned to the parameters in the function based on their order (position) when the function is called.
+The number of arguments and their order must match the function's definition.
+Example:
+
+python
+def greet(name, age):
+    print(f"Hello {name}, you are {age} years old.")
+
+# Calling the function with positional arguments
+greet("Alice", 25)
+"Alice" is assigned to name (first position).
+25 is assigned to age (second position).
+Output:
+
+text
+Hello Alice, you are 25 years old.
+If you change the order, the meaning changes:
+python
+greet(25, "Alice")  # Incorrect! Now name=25, age="Alice"
+2. Keyword Arguments
+
+These are arguments passed to a function by explicitly specifying the parameter name and its value.
+Order does not matter because the arguments are identified by their names.
+Useful for improving readability and skipping optional arguments.
+Example:
+
+python
+def greet(name, age):
+    print(f"Hello {name}, you are {age} years old.")
+
+# Calling the function with keyword arguments
+greet(age=25, name="Alice")
+Even though the order is reversed, the correct values are assigned because we used parameter names.
+Output:
+
+text
+Hello Alice, you are 25 years old.
+Keyword arguments are especially helpful in functions with many parameters to avoid confusion.
+3. Default Arguments
+
+These are parameters that have a default value assigned in the function definition.
+If the caller doesn't provide a value for that argument, the default value is used.
+Default arguments must be defined after non-default arguments in the function definition.
+Example:
+
+python
+def greet(name, age=30):  # age has a default value of 30
+    print(f"Hello {name}, you are {age} years old.")
+
+# Calling the function without providing 'age'
+greet("Bob")  # age will use the default value (30)
+
+# Calling the function and overriding the default
+greet("Charlie", 40)
+Output:
+
+text
+Hello Bob, you are 30 years old.
+Hello Charlie, you are 40 years old.
+"""
+
+#using built in round function
+"""
+The round() built-in function takes in two arguments. The first argument is the number we want to round, followed by an argument on how many decimal places we want to round it.
+
+Here is an example:
+
+rounded_zero = round(10.54, 0)
+rounded_one = round(10.54, 1)
+
+print(rounded_zero)
+print(rounded_one)
+
+Copy to Clipboard
+
+Would output:
+
+11.00
+10.5
+"""
