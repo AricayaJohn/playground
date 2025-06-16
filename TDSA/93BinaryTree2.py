@@ -83,3 +83,127 @@ print(lowest_common_ancestor(a, 'd', 'f'))  # -> 'a'
 """
 Write a function, flip_tree, that takes in the root of a binary tree. The function should flip the binary tree, turning left subtrees into right subtrees and vice-versa. This flipping should occur in-place by modifying the original tree. The function should return the root of the tree.
 """
+
+#function to flip (mirror) a binary tree
+def flip_tree(root):
+#basecase: if the current node is None, return None
+    if root is None:
+        return None
+#recursively flip the left subtree
+    left = flip_tree(root.left)
+#recursively flip the right subtree
+    right = flip_tree(root.right)
+
+#swap the left and right children
+    root.left = right
+    root.right = left
+
+#return the current node after flipping its children
+    return root
+
+# Define a simple binary tree node class
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+# Helper function to print tree in-order for visual verification
+def print_inorder(root):
+  if root is None:
+    return
+  print_inorder(root.left)
+  print(root.val, end=' ')
+  print_inorder(root.right)
+
+# Build a sample tree:
+#     a
+#    / \
+#   b   c
+#  /     \
+# d       e
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+e = Node('e')
+
+a.left = b
+a.right = c
+b.left = d
+c.right = e
+
+print("Original tree in-order:")
+print_inorder(a)  # Output: d b a c e
+
+# Flip the tree
+flip_tree(a)
+
+print("\nFlipped tree in-order:")
+print_inorder(a)  # Output: e c a b d
+
+
+
+#lefty nodes
+"""
+write a function, lefty_nodes, that takes in the root of a binary tree. The function should return a list containing the left-most value on every level of the tree. The list must be ordered in a top-down fashion where the root is the first item.
+"""
+
+#Function to collect the left-most node at each level of a binary tree
+def lefty_nodes(root):
+#list to store the left-most values at each level
+    values = []
+#start the traversal from root at level 0
+    traverse(root, 0, values)
+#return the collected left-most node values
+    return values
+
+#helper fuction to perform DFS traversal while tracking level and left-most nodes
+def traverse(root, level, values):
+#basecase: if the node is None, return
+    if root is None:
+        return 
+
+#if this is the first node encountered at this level, it;s the left-most
+    if len(values) == level:
+        values.append(root.val)
+#Recur on the left subtree first to ensure left-most node is seen first 
+    traverse(root.left, level + 1, values)
+#then recur on the righ subtree
+    traverse(root.right, level + 1, values)
+
+# Define a basic binary tree node class
+class Node:
+  def __init__(self, val):
+    self.val = val
+    self.left = None
+    self.right = None
+
+# Build the binary tree:
+#       a
+#      / \
+#     b   c
+#    /   / \
+#   d   e   f
+#          /
+#         g
+
+a = Node('a')
+b = Node('b')
+c = Node('c')
+d = Node('d')
+e = Node('e')
+f = Node('f')
+g = Node('g')
+
+a.left = b
+a.right = c
+b.left = d
+c.left = e
+c.right = f
+f.left = g
+
+# Call the function and print result
+print(lefty_nodes(a))  # Expected output: ['a', 'b', 'd', 'g']
+
