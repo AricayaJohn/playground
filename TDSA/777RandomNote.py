@@ -225,3 +225,26 @@ Would output:
 11.00
 10.5
 """
+
+#"Range"
+"""
+range(3): runs the indented block of code 3 times (once for each number in range(3)).
+
+# Write your function here
+def append_sum(my_list):
+  for i in range(3):
+    last2 = my_list[-1] + my_list[-2]
+    my_list.append(last2)
+  return my_list
+
+# Uncomment the line below when your function is done
+print(append_sum([1, 1, 2]))
+
+"""
+
+"""
+using list() to create a list of range 
+We can generate the numbers in a certain range by a certain increment using the range() function. In order to convert the range sequence into a list, we can pass it into the list() function.
+def every_three_nums(start):
+  return list(range(start, 101, 3))
+"""
