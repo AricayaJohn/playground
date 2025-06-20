@@ -580,7 +580,58 @@ def _build_tree_in_pre(in_order, pre_order, in_order_index,
 
 #is tree balanced
 """
-Write a function, is_tree_balanced, that takes in the root of a binary tree. The function should return a boolean indicating wether or not the tree is "balanced"
+Write a function, is_tree_balanced, that takes in the root of a binary tree. The function should return a boolean indicating whether or not the tree is "balanced"
 
 A "balanced" binary tree where the height between the left and right subtrees differ by at most 1 for every node.
 """
+
+def check_height_balance(root):
+#if the node is None(empty tree or leaf's child), its height is 0
+    if root is None:
+        return 0
+#Recursively get the height of the left subtree
+    left_height = check_height_balance(root.left)
+#if left subtree is unbalanced, propagate -1 upward
+    if left_height == -1:
+        return -1
+#Recursively get the height of the right subtree
+    right_height = check_height_balance(root.right)
+#if right substree is unbalanced, propogate -1 upward
+    if right_height == -1:
+        return -1
+#If the current node's left and right subtrees differ in height by more than 1, it's unbalanced
+    if abs(left_height - right_height) > 1:
+        return -1
+    else:
+#return the height of this node as 1 + max height of its subtrees
+        return 1 + max(left_height, right_height)
+def is_tree_balanced(root):
+    # Returns True if the tree is balanced (check_height_balance didn't return -1)
+    return check_height_balance(root) > -1
+
+# Define a basic binary tree Node class
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+# Constructing a balanced binary tree:
+#       A
+#      / \
+#     B   C
+#    /
+#   D
+
+root = Node('A')
+root.left = Node('B')
+root.right = Node('C')
+root.left.left = Node('D')
+
+print(is_tree_balanced(root))  # Output: True
+
+# Making the tree unbalanced by adding more depth to one side
+root.left.left.left = Node('E')
+root.left.left.left.left = Node('F')
+
+print(is_tree_balanced(root))  # Output: False
