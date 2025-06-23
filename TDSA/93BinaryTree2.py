@@ -1,4 +1,8 @@
-
+#Binary search tree
+"""
+All values to the left of a parent must be less than the parent
+All values to the right of a parent must be greater than or equal to the parent
+"""
 
 #Lowest common ancestor
 """
