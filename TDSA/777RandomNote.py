@@ -248,3 +248,11 @@ We can generate the numbers in a certain range by a certain increment using the 
 def every_three_nums(start):
   return list(range(start, 101, 3))
 """
+
+
+#DAG
+#Directed Acyclic Graph
+#Node/Nodes that is directed only to one directions
+
+#Cyclic 
+#Nodes that travel into a cylce
