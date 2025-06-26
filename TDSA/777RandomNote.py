@@ -256,3 +256,8 @@ def every_three_nums(start):
 
 #Cyclic 
 #Nodes that travel into a cylce
+
+#topological order
+#visiting parent node first before children nodes
+
+

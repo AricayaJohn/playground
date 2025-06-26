@@ -171,3 +171,32 @@ print(result)
 """
 Write a function that takes in a graph adjacency list, a source node, and a destination node. The function should return a list containing all possible paths that travel between the source and destination.
 """
+def possible_paths(graph, src, dst):
+#calls helper to get all paths (in reverse order) from src to dst, then reverses each path to show it from src to dst correctly
+    paths = traverse_paths(graph, src, dst)
+#reverse each path to get correct order
+    return [ p[::-1] for p in paths]
+
+def traverse_paths(graph,src, dst):
+#basecase: if source and destination are the same, return a path with just that node
+    if src == dst:
+        return [ [src] ]
+#this will store all paths from src to dst
+    path = []
+    for neighbor in graph[src]:
+#recursively find all paths from neighbor to destination
+        neighbor_paths = traverse_paths(graph, neighbor, dst)
+        for neighbor_path in neighbor_paths:
+#append current source to each neighbor's path (building a path backward)
+            neighbor_path.append(src)
+            path.append(neighbor_path)
+    return path
+
+graph = {
+  'A': ['B', 'C'],
+  'B': ['D'],
+  'C': ['D'],
+  'D': []
+}
+
+print(possible_paths(graph, 'A', 'D'))
