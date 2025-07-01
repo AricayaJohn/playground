@@ -259,5 +259,5 @@ def every_three_nums(start):
 
 #topological order
 #visiting parent node first before children nodes
-
+#The topological ordering of a graph is a sequence where "parent nodes" appear before their "children" within the sequence.
 
