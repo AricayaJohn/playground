@@ -242,3 +242,99 @@ def virus_spread(grid):
     else:
         return max_t
 
+# mixed recall
+"""
+What is the worst-case height of a bindary tree?
+The worst case height of a binary tree is 0(n). This would mean that the nodes form a long 'linked-list chain
+
+What is a DAG?
+Directed Acyclic Graph. it is a graph with edges that point in one direction and has no cycles
+
+For graphs, what algorithm is usually a good fit for finding the shortest distance between two nodes?
+BFS is typically a good fit for shortest path finding. This is because the first path we find between two nodes is guaranteed to be the shortest in a BFS
+
+
+What can lists do that sets cannot?
+Lists can contain duplicate items. Lists also maintain an ordering among items
+
+descrive the main difference between subsets and permutations
+in subsets, order does not matter, in permuptations, order does matter
+
+Which complexity is worse: O(2^n) or O(n^6)
+O(2^n) is worse because it is exponential. 
+O(n^6) is only polynomial
+"""
+
+#positioning plants
+"""
+you've been hired to plant flowers in a garden with n different positions. There are m different flower types.
+The prices of flowers types vary depending on which position they are planted. Your bosses are picky, they tell you to never plant two of the same flower type right next to each other. What is the minimum cost we need to plant a flower in each position of the garden?
+
+Write a function, positioningPlants, that takes in a 2D list with dimensions n * m. Each row of the list represents the costs of the flower types at that position. This means that costs[i][j] represents the cost of planting flower type j at position i. For example: 
+"""
+def positioning_plants(costs):
+  return _positioning_plants(costs, 0, None, {})
+
+def _positioning_plants(costs, pos, last_plant, memo):
+  key = (pos, last_plant)
+  if key in memo:
+    return memo[key]
+
+  if pos == len(costs):
+    return 0
+
+  min_cost = float('inf')
+
+  for plant, cost in enumerate(costs[pos]):
+    if plant != last_plant:
+      candidate = cost + _positioning_plants(costs, pos + 1, plant, memo)
+      min_cost = min(candidate, min_cost)
+
+  memo[key] = min_cost
+  return min_cost
+
+
+  #flatten tree
+"""
+Write a function, flatten_tree, that takes in the root of a binary tree. The function should modify the binary tree by flattening it into a "linked-list" using the same tree nodes. In the resulting "linked-list", left pointers should be null and right pointers should point to the next node in the list. The order of the nodes in the resulting "linked-list" should follow pre-order. Your function should return the root/head of the list
+"""
+
+# class Node:
+#   def __init__(self, val):
+#     self.val = val
+#     self.left = None
+#     self.right = None
+
+def flatten_tree(root):
+  stack = [root]
+  prev = None
+  
+  while stack:
+    current = stack.pop()
+
+    if prev:
+      prev.right = current
+
+    prev = current
+
+    if current.right is not None:
+      stack.append(current.right)
+
+    if current.left is not None:
+      stack.append(current.left)
+      
+    current.left = None
+    current.right = None
+
+  return root
+
+  
+
+
+
+
+
+
+
+
+  
