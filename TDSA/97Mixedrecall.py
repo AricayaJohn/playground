@@ -132,4 +132,113 @@ def _knightly_number(n, m, kr, kc, pr, pc, memo):
 """
 You are given a list of bus routes, a starting station, and an ending station. A bus route is a pair of two stations(a, b) such that the bus travels from a to b, but not from b to a.
 """
+def all_trips(routes, start_station, end_station):
+  graph = build_graph(routes)
+  paths = get_paths(graph, start_station, end_station)
+  return [ path[::-1] for path in paths ]
+
+def get_paths(graph, src, dst):
+  if src == dst:
+    return [ [src] ]
+
+  all_paths = []
+  for neighbor in graph[src]:
+    neighbor_paths = get_paths(graph, neighbor, dst)
+    for neighbor_path in neighbor_paths:
+      neighbor_path.append(src)
+      all_paths.append(neighbor_path)
+  return all_paths
+
+def build_graph(edges):
+  graph = {}
+  for edge in edges:
+    a, b = edge
+    if a not in graph:
+      graph[a] = []
+    if b not in graph:
+      graph[b] = []
+    graph[a].append(b)
+  return graph
+
+
+
+  #has path sum
+  """
+  Write a function, has_path_sum, that takes in the root of a binary tree and a target number. The function should return a boolean indicating whether or not there is a path through the tree that sums to the target
+  """
+  def has_path_sum(root, target):
+  if root is None:
+    return False
+
+  if root.left is None and root.right is None and root.val == target:
+    return True
+
+  return has_path_sum(root.left, target - root.val) or has_path_sum(root.right, target - root.val)
+
+
+#Knapsack
+"""
+Write a function, knapsack that takes in a list of item values, a list of item weights, and a weight limit. The i-th item has a value of values[i] and weight of weights[i]. Your job is to pick items to pack into your knapsack so that its total weight does not exceed the limit and the value of the items is maximized. You may either take an item once or not at all. You cannot take the same item multiple times. 
+
+Return the maximum total value of items you can pack into the knapsack.
+"""
+def _knapsack(values, weights, weight_limit, i, memo):
+  if weight_limit < 0:
+    return -float("inf")
+
+  if i == len(values):
+    return 0
+
+  key = (weight_limit, i)
+  if key in memo:
+    return memo[key]
+
+  memo[key] = max(
+    values[i] + _knapsack(values, weights, weight_limit - weights[i], i + 1, memo), _knapsack(values, weights, weight_limit, i + 1, memo)
+  )
+  return memo[key]
+
+def knapsack(values, weights, weight_limit):
+  return _knapsack(values, weights, weight_limit, 0, {})
+
+
+#virus spread. 
+"""
+Write a function, virus_spread, that takes in a grid. In the grid, 0's are empty spaces, 1's are clean computers, adn 2's are infected computers. Every hour , the virus spreads from infected computers to immediately adjacents clean computers. The virus can only spread to adjacent computers that are up, dow, left, or right.
+
+The function should return the number of hours it will take for all computers to be infected. If it is impossible for all computers to become infected, then return -1
+"""
+from collections import deque
+
+def virus_spread(grid):
+    clean_computers = 0
+    queue = deque([])
+    visited = set()
+    for r in range(0, len(grid)):
+        for c in range(0, len(grid[0])):
+            if grid[r][c] == 1:
+                clean_computers += 1
+            elif grid[r][c] == 2:
+                visited.add((r, c))
+                queue.append((r, c, 0))
+
+    deltas = [(0, 1), (0, -1), (1,0), (-1, 0)]
+    max_t = 0
+    while queue:
+        r, c, t = queue.popleft()
+        max_t = t
+        for delta in deltas:
+            delta_r, delta_c = delta
+            neighbor_r = r + delta_r
+            neighbor_c = c + delta_c
+            neighbor_pos = (neighbor_r, neighbor_c)
+            if 0 <= neighbor_r < len(grid) and 0 <= neighbor_c < len(grid[0]) and grid[neighbor_r][neighbor_c] != 0 and neighbor_pos not in visited:
+                clean_computers -= 1
+                visited.add(neighbor_pos)
+                queue.append((*neighbor_pos, t + 1))
+
+    if clean_computers > 0:
+        return -1
+    else:
+        return max_t
 
