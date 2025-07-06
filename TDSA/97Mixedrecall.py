@@ -329,6 +329,12 @@ def flatten_tree(root):
   return root
 
   
+#best house build
+"""
+You are building a new house in the neighborhood and want to choose a location so that the house is as close as possible to all other houses.
+
+Write a function, best_house_build, that takes in a grid, O's are empty spaces, 1's are houses, and 2's are trees. Your job is to find an empty space on the grid that has the shortest total travel distance to all houses. Your function should return a number that corresponds to his shortest total travel distance. If it is not possible to chose a location that is that is reachable by all houses then return -1
+"""
 
 
 
