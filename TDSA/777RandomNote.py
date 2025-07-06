@@ -261,3 +261,9 @@ def every_three_nums(start):
 #visiting parent node first before children nodes
 #The topological ordering of a graph is a sequence where "parent nodes" appear before their "children" within the sequence.
 
+
+"""
+echo "Hello Command Line" >> hello_cli.txt to create a new file named hello_cli.txt and add Hello Command Line to that file. When you type ls, you should see the following:
+
+cat hello_cli.txt to print the contents of the hello_cli.txt file to the terminal. You should see something like:
+"""
