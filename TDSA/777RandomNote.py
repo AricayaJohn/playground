@@ -300,3 +300,35 @@ version control system that allows us to track and manage changes to solved code
 repository track histry built history 
 it allows SWE to collaborate and update code 
 """
+
+#git init
+#initialize
+
+#git status 
+""" to check if there is any added changes, files needed to commit"""
+
+
+#git diff
+# to check if there was any changes made in the text file 
+
+#git add
+#add the changes to the status
+"""
+The staging area is a place where Git gathers all the changes you want to include in your next commit. It's like preparing your shopping cart before checking out.
+
+can add multiple file that is uncommitted after checking git status
+
+$ git add disclaimer.txt instructions.txt warranty.txt 
+"""
+
+
+
+#git commit 
+"""
+A commit is the last step in our Git workflow. A commit permanently stores changes from the staging area inside the repository.
+"""
+
+#git log 
+"""
+Checks the log of commits
+"""

@@ -57,7 +57,6 @@ print(anagrams("restful", "fluster"))
     #{r:1 e:1 s:1 t:1 f:1 u:1 l:1 } ==
     #{f:1 l:1 u:1 s:1 t:1 e:1 r:1}  return True/False
 
-
 #Most frequent Char
 #Write a function, most_frequent_char, that takes in a string as an argument. The function should return the most frequent character of the string. If there are ties, return the character that appears earlier in the string.
 
