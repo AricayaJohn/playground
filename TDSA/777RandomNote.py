@@ -267,3 +267,36 @@ echo "Hello Command Line" >> hello_cli.txt to create a new file named hello_cli.
 
 cat hello_cli.txt to print the contents of the hello_cli.txt file to the terminal. You should see something like:
 """
+
+#how to check on index
+"""
+ i < len(string argument)
+"""
+
+#The next command we’re going to look at is pwd, which stands for “print working directory.”
+"""
+terminal of folder check where the folder is type pwd
+"""
+
+
+#moving directories 2 up :
+#To go from memory up 2 directories to 2015, we use ../.. such as:
+
+#to move from one directory adjacent
+# ../(folder adjacent)
+
+
+#removing directory. 
+#rmdir (media name)
+
+#clear terminal
+#to clear terminal type clear
+
+
+#git
+"""
+version control system that allows us to track and manage changes to solved code.
+
+repository track histry built history 
+it allows SWE to collaborate and update code 
+"""

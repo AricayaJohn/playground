@@ -335,12 +335,130 @@ You are building a new house in the neighborhood and want to choose a location s
 
 Write a function, best_house_build, that takes in a grid, O's are empty spaces, 1's are houses, and 2's are trees. Your job is to find an empty space on the grid that has the shortest total travel distance to all houses. Your function should return a number that corresponds to his shortest total travel distance. If it is not possible to chose a location that is that is reachable by all houses then return -1
 """
+from collections import deque, defaultdict
+
+def best_house_build(grid):
+  queue = deque()
+  visited = defaultdict(set)
+  total_distance = defaultdict(int)
+  for r in range(len(grid)):
+    for c in range(len(grid[0])):
+      if grid[r][c] == 1:
+        queue.append(((r, c, 0), (r, c)))
+        visited[(r, c)].add((r, c))
+
+  num_houses = len(queue)
+
+  deltas = [
+    (1, 0),
+    (0, 1),
+    (-1, 0),
+    (0, -1)
+  ]
+  while len(queue):
+    pos, src = queue.popleft()
+    r, c, dist = pos
+    for delta in deltas:
+      delta_r, delta_c = delta
+      new_r = r + delta_r
+      new_c = c + delta_c
+      new_pos = new_r, new_c
+      r_inbounds = 0 <= new_r < len(grid)
+      c_inbounds = 0 <= new_c < len(grid[0])
+      if r_inbounds and c_inbounds and src not in visited[new_pos] and grid[new_r][new_c] == 0:
+        visited[new_pos].add(src)
+        queue.append(((new_r, new_c, dist + 1), src))
+        total_distance[new_pos] += dist + 1
+    
+  min_dist = float("inf")
+  for pos in visited:
+    if len(visited[pos]) == num_houses:
+      if total_distance[pos] > 0 and total_distance[pos] < min_dist:
+        min_dist = total_distance[pos]
+  return min_dist if min_dist != float('inf') else -1
 
 
+#breaking bounderies
+"""
+Write a function, breaking_boundaries, that takes in 5 arguments: a number of rows (m), a number of columns (n), a number of moves (k), a starting row (r), and a starting column (c). Say you were situated in a grid with dimensions m * n. If you had to start at position (r,c), in how many different ways could you move out of bounds if you could take at most k moves. A single move is moving one space up, down, left, or right. During a path you may revisit a position.
+"""
+def breaking_boundaries(m, n, k, r, c):
+  return _breaking_boundaries(m, n, k, r, c, {})
+
+def _breaking_boundaries(m, n, k, r, c, memo):
+  key = (k, r, c)
+  if key in memo:
+    return memo[key]
+  
+  row_inbounds = 0 <= r < m
+  col_inbounds = 0 <= c < n
+  if not row_inbounds or not col_inbounds:
+    return 1
+  
+  if k == 0:
+    return 0
+  
+  count = 0
+  
+  deltas = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+  for delta in deltas:
+    d_row, d_col = delta
+    count += _breaking_boundaries(m, n, k - 1, r + d_row, c + d_col, memo)
+    
+  memo[key] = count
+  return count
 
 
+#token replace
+"""
+Write a function, token_replace, that takes in a dictionary of tokens and a string. The function should return a new string where tokens are replaced.
 
+Tokens are enclosed in a pair of '$'. You can assume that the input string is properly formatted and '$' is not used in the string except to enclose a token. Tokens should be replaced from left to right in the string.
+"""
+def token_replace(s, tokens):
+  output = ''
+  i = 0
+  j = 1
+  while i < len(s):
+    if s[i] != '$':
+      output += s[i]
+      i += 1
+      j = i + 1
+    elif s[j] != '$':
+      j += 1
+    else:
+      key = s[i:j + 1]
+      output += tokens[key]
+      i = j + 1
+      j = i + 1
 
-
+  return output
+  
 
   
+  #token transformation
+  """
+  Write a function, token_transformation, that takes in aa dictionary of tokens and a string. In the dictionary, the replacement values for a token may reference other tokens. The function should return a new string where tokens are replaced with their fully evaluated string values.
+
+  Tokens are enclosed in a pair of '$'. You can assume that the input string is properly formatted and "$" is not used in the string except to enclose a token.
+  """
+  def token_transform(s, tokens):
+  output = []
+  i = 0
+  j = 1 
+  while i < len(s):
+    if s[i] != '$':
+      output.append(s[i])
+      i += 1
+      j = i + 1 
+    elif s[j] != '$':
+      j += 1
+    else:
+      key = s[i:j + 1]
+      value = tokens[key]
+      evaluated_value = token_transform(value, tokens)
+      tokens[key] = evaluated_value
+      output.append(evaluated_value)
+      i = j + 1
+      j = i + 1
+  return ''.join(output)
