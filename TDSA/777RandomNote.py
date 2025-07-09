@@ -332,3 +332,10 @@ A commit is the last step in our Git workflow. A commit permanently stores chang
 """
 Checks the log of commits
 """
+
+
+
+#running a function through the terminal
+"""
+python3 (name of file to run)
+"""
