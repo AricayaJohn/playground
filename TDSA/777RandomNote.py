@@ -363,3 +363,21 @@ print(love_maybe_lines_stripped)
 love_maybe_full = '\n'.join(love_maybe_lines_stripped)
 print(love_maybe_full)
 """
+
+#using .replace
+"""
+with_spaces = "You got the kind of loving that can be so smooth"
+with_underscores = with_spaces.replace(' ', '_')
+print(with_underscores)
+# 'You_got_the_kind_of_loving_that_can_be_so_smooth'
+"""
+
+#using format to replace parts of string:
+"""
+poem_description = "The poem {} is written by {}"
+
+def poem_title_card(title, poet):
+  return poem_description.format(title, poet)
+
+print(poem_title_card("I Hear America Singing", "is written by Walt Whitman"))
+"""
