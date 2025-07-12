@@ -349,5 +349,17 @@ python3 (name of file to run)
 my_munequita = ['My', 'Spanish', 'Harlem', 'Mona', 'Lisa']
 print(' '.join(my_munequita))
 # => 'My Spanish Harlem Mona Lisa'
+"""
 
+#joining strings in a list with white spaces then seperating them in one line
+"""
+love_maybe_lines = ['Always    ', '     in the middle of our bloodiest battles  ', 'you lay down your arms', '           like flowering mines    ','\n' ,'   to conquer me home.    ']
+
+
+love_maybe_lines_stripped = [line.strip() for line in love_maybe_lines]
+
+print(love_maybe_lines_stripped)
+
+love_maybe_full = '\n'.join(love_maybe_lines_stripped)
+print(love_maybe_full)
 """
