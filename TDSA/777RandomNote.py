@@ -344,3 +344,10 @@ python3 (name of file to run)
 #splitting lines  
 #using ->     variable_name.split('\n') 
 
+#joining strings
+"""
+my_munequita = ['My', 'Spanish', 'Harlem', 'Mona', 'Lisa']
+print(' '.join(my_munequita))
+# => 'My Spanish Harlem Mona Lisa'
+
+"""
