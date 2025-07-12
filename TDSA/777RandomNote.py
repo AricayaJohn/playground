@@ -339,3 +339,8 @@ Checks the log of commits
 """
 python3 (name of file to run)
 """
+
+
+#splitting lines  
+#using ->     variable_name.split('\n') 
+

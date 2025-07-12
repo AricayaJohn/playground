@@ -10,7 +10,7 @@ def linked_list_values(head):
 #start at the head of the list 
     current = head
 #loop until the end of the list
-    while current cuttent is not None:
+    while current is not None:
 #Add current node's value to the list
         values.append(current.val)
 #move to the next node
