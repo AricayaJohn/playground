@@ -123,7 +123,7 @@ def linked_list_find(head, target):
 #Traverse until the head
     while current is not None:
 #If current value matches target
-        if current .val == target:
+        if current.val== target:
 #return True if found
             return True
 #move to next node
