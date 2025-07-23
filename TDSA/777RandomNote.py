@@ -460,4 +460,18 @@ with open('welcome.txt') as text_file:
   text_data = text_file.read()
 print(text_data)
 
+
+with open('how_many_lines.txt') as lines_doc:
+  for line in lines_doc.readlines():
+    print(line)
+
+#reading only a line
+
+with open("just_the_first.txt") as first_line_doc:
+  first_line = first_line_doc.readline()
+  print(first_line)
+
+#readline() -> keep tracks of which line is printed 
+
+
 """
