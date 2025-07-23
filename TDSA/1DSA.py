@@ -121,3 +121,7 @@ def pairs(elements):
       result.append(pair)
 #7) Return the final list of pairs
   return result
+
+
+
+

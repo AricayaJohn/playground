@@ -91,7 +91,6 @@ names.sort(reverse=True)
 print(names)
 
 
-
 Slicing:
 start is the index of the first element that we want to include in our selection. In this case, we want to start at "b", which has index 1.
 end is the index of one more than the last index that we want to include. The last element we want is "f", which has index 5, so end needs to be 6.
@@ -438,4 +437,27 @@ for poem in highlighted_poems_details:
 
 for i in range(0,len(highlighted_poems_details)):
     print('The poem {} was published by {} in {}'.format(titles[i], poets[i], dates[i]))
+"""
+
+
+""" 
+using time in python
+
+from datetime import datetime
+
+current_time = datetime.now()
+
+print(current_time)
+
+"""
+
+
+"""
+reading txt file through .py
+
+
+with open('welcome.txt') as text_file:
+  text_data = text_file.read()
+print(text_data)
+
 """
