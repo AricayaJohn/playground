@@ -495,3 +495,16 @@ with open("cool_csv.csv") as cool_csv_file:
     print(row["Cool Fact"])
 """
 
+#csv 
+#comma seperated values
+
+
+#readinh json file
+"""
+import json
+
+with open('message.json') as message_json:
+  message = json.load(message_json)
+
+print(message['text'])
+"""
