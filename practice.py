@@ -1,3 +1,26 @@
+"""Hashing"""
+def anagrams(s1, s2):
+    def count_char(s):
+        count = {}
+        for char in s:
+            if char not in count:
+                count[char] = 0
+            count[char] += 1
+        return count
+    return count_char(s1) == count_char(s2)
+
+def most_frequent_char(s):
+    count = {}
+    for char in s:
+        if char not in count:
+            count[char] = 0
+        count[char] += 1
+    most_frequent_char = None
+    for char in s:
+        if most_frequent_char is None or count[char] > count[most_frequent_char]:
+            most_frequent_char = char
+    return most_frequent_char
+
 """Linked list"""
 
 def linked_list_values(head):

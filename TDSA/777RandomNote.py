@@ -473,5 +473,25 @@ with open("just_the_first.txt") as first_line_doc:
 
 #readline() -> keep tracks of which line is printed 
 
+with open("bad_bands.txt", 'w') as bad_bands_doc:
+  bad_bands_doc.write("brobro band")
 
+'w' is to write argument to be able to write in new bad_bands txt doc
 """
+
+#printing read csv
+"""
+with open("logger.csv") as log_csv_file:
+  print(log_csv_file.read())
+"""
+
+#reading csv and dictionary
+"""
+import csv
+
+with open("cool_csv.csv") as cool_csv_file:
+  cool_csv_dict = csv.DictReader(cool_csv_file)
+  for row in cool_csv_dict:
+    print(row["Cool Fact"])
+"""
+
