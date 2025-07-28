@@ -514,3 +514,14 @@ print(message['text'])
 """
 describes the kinds of information that class will hold and how a programmer will interact with that data
 """
+
+#OOP
+"""
+A class instance is also called an object. The pattern of defining 
+classes
+Preview: Docs Classes are templates used to define the properties and methods of objects in code.
+ and creating objects to represent the responsibilities of a program is known as 
+Object Oriented Programming
+Preview: Docs Loading link description
+ or OOP.
+ """
