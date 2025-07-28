@@ -525,3 +525,10 @@ Object Oriented Programming
 Preview: Docs Loading link description
  or OOP.
  """
+
+ #dunder/ constructor method:
+ """
+ Methods that are used to prepare an object being instantiated are called constructors. The word “constructor” is used to describe similar features in other object-oriented programming languages, but programmers who refer to a constructor in Python are usually talking about the __init__() method.
+ """
+
+ 
