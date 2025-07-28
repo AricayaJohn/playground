@@ -508,3 +508,9 @@ with open('message.json') as message_json:
 
 print(message['text'])
 """
+
+
+#class 
+"""
+describes the kinds of information that class will hold and how a programmer will interact with that data
+"""
