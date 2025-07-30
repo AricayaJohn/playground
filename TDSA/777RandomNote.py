@@ -566,3 +566,22 @@ Preview: Docs Returns the value of a named attribute from an object.
  """
  We use dir() to explore its attributes, and it gives us a large number of internal Python dunder attributes, but afterward, we get the usual list methods.
  """
+
+
+#constructor:
+class Student:
+  def __init__(self, name, year):
+    self.name = name
+    self.year = year
+
+#Instance
+roger = Student("Roger van der Weyden", 10)
+sandro = Student("Sandro Botticelli", 12)
+pieter = Student("Pieter Bruegel the Elder", 8)
+
+class Grade:
+  def __init__(self, score):
+    self.score = score
+
+#attribute
+  minimum_passing = 65
