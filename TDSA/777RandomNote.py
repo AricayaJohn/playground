@@ -526,6 +526,8 @@ Preview: Docs Loading link description
  or OOP.
  """
 
+ #classes are a blueprint to the creating objects
+
  #dunder/ constructor method:
  """
  Methods that are used to prepare an object being instantiated are called constructors. The word “constructor” is used to describe similar features in other object-oriented programming languages, but programmers who refer to a constructor in Python are usually talking about the __init__() method.
@@ -543,4 +545,24 @@ for key in keys_to_remove:
   deck_of_cards.pop(key, None)
 
 print(deck_of_cards)
+ """
+
+
+ #hasattr() and getattr()
+ """
+ hasattr()
+Preview: Docs Returns True if an object has an attribute and False otherwise.
+ will 
+return
+Preview: Docs Ends a function and sends a value back to the caller.
+ True if an object has a given attribute and False otherwise. If we want to get the actual value of the attribute, 
+getattr()
+Preview: Docs Returns the value of a named attribute from an object.
+ is a Python function that will return the value of a given object and attribute
+ """
+
+
+ #checking dir
+ """
+ We use dir() to explore its attributes, and it gives us a large number of internal Python dunder attributes, but afterward, we get the usual list methods.
  """
